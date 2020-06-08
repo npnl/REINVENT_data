@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>REINVENT Data</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Reinvent Data - 2020</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="speed-and-distance.html">speed</a>
+</li>
+<li>
+  <a href="SensorsFigures_may2020.html">Figures</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">REINVENT Data</h1>
+
+</div>
+
+
+<div style="page-break-after: always;"></div>
+<pre class="r"><code># Colors
+seqColor &lt;- c(&quot;#a6611a&quot;,&quot;#dfc27d&quot;,&quot;#80cdc1&quot;,&quot;#018571&quot;)
+
+# Figure Theme
+figTheme &lt;- theme(
+  legend.text = element_text(size = 12),
+  legend.title = element_text(size = 12),
+  plot.title = element_text(size = 12),
+  strip.text.x = element_text(size = 12),
+  axis.title.x = element_text(size = 12),
+  axis.title.y = element_text(size = 12),
+  axis.text.x = element_text(size = 12),
+  axis.text.y = element_text(size = 12))
+
+# Load data frame
+load(&quot;sensors2020data.Rda&quot;)</code></pre>
+<hr />
+<div id="table-1" class="section level1">
+<h1>Table 1</h1>
+<p>Participant demographics and baseline evaluations</p>
+<pre class="r"><code># Show table
+demograph.data%&gt;%
+  dplyr::rename(
+    &quot;Participant&quot; = Subject,
+    &quot;Sex&quot; = Gender,
+    &quot;Onset (months)&quot; = Months.since.stroke,
+    &quot;FMA-UE&quot; = FMA,
+    &quot;Paresis&quot; = Affected.side) %&gt;%
+  pander()</code></pre>
+<table>
+<colgroup>
+<col width="18%" />
+<col width="12%" />
+<col width="8%" />
+<col width="22%" />
+<col width="13%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Participant</th>
+<th align="center">Sex</th>
+<th align="center">Age</th>
+<th align="center">Onset (months)</th>
+<th align="center">Paresis</th>
+<th align="center">FMA-UE</th>
+<th align="center">MOCA</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">Male</td>
+<td align="center">66</td>
+<td align="center">34</td>
+<td align="center">Left</td>
+<td align="center">19</td>
+<td align="center">23</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">Male</td>
+<td align="center">42</td>
+<td align="center">34</td>
+<td align="center">Right</td>
+<td align="center">22</td>
+<td align="center">17</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">Male</td>
+<td align="center">64</td>
+<td align="center">56</td>
+<td align="center">Left</td>
+<td align="center">14</td>
+<td align="center">22</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">Female</td>
+<td align="center">53</td>
+<td align="center">28</td>
+<td align="center">Left</td>
+<td align="center">20</td>
+<td align="center">22</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="feasibility" class="section level1">
+<h1>Feasibility</h1>
+<p>The simulator sickness questionnaire evaluates different components and has a total score of 63 points. Group changes on simulator sickness were evaluated with the total sickness as a percentage (sickness = total*100/63).</p>
+<pre class="r"><code># Get pre and post 
+pre &lt;- simsick.data %&gt;%
+  filter(session == 2)
+post &lt;- simsick.data %&gt;%
+  filter(session == 9)
+
+t.test(post$Sickness, pre$Sickness, paired = TRUE)</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  post$Sickness and pre$Sickness
+## t = 0.32163, df = 3, p-value = 0.7688
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -7.059228  8.646530
+## sample estimates:
+## mean of the differences 
+##               0.7936508</code></pre>
+</div>
+<div id="figure-2" class="section level1">
+<h1>Figure 2</h1>
+<p>Clinical Assessments</p>
+<pre class="r"><code># Change session to Pre-Post and melt dataframe
+behav.melt &lt;- 
+  behav.data %&gt;%
+  filter(session %in% c(1,10)) %&gt;%
+  mutate(session = ifelse(session == 1, &quot;Pre&quot;,&quot;Post&quot;)) %&gt;%
+  dplyr::rename(
+    &quot;Extension&quot; = WE,
+    &quot;SIS-16&quot; = SIS16) %&gt;%
+  melt(id = c(&quot;subject&quot;,&quot;session&quot;))
+
+# Plot FMA and ARAT
+behav.melt %&gt;%
+  ggplot() +
+  geom_line(aes(session, value, group = as.factor(subject), color = as.factor(subject)), size = 2, alpha = 0.7, show.legend = F) +
+  geom_point(aes(session, value, shape = as.factor(subject), fill = as.factor(subject)), size = 3) +
+  
+  facet_wrap(~ variable, scales = &quot;free&quot;, ncol = 3) +
+  xlab(&quot;Evaluation&quot;) +
+  ylab(&quot;&quot;) +
+  theme_classic() +
+  scale_x_discrete(limits = c(&quot;Pre&quot;,&quot;Post&quot;)) +
+  scale_color_manual(values = seqColor[1:5]) +
+  scale_fill_manual(values = seqColor[1:5]) +
+  scale_shape_manual(values = 21:24) +
+  figTheme +
+  theme( strip.background.x = element_blank())+
+  labs(
+    title = &quot;Clinical Assessments&quot;,
+    fill = &quot;Participant&quot;,
+    shape = &quot;Participant&quot;,
+    color = &quot;&quot;
+  )</code></pre>
+<p><img src="SensosrFigures_may2020_files/figure-html/ClinicalAssessments-1.png" width="672" /></p>
+</div>
+<div id="table-2" class="section level1">
+<h1>Table 2</h1>
+<p>Statistical comparisons for clinical assessments</p>
+<pre class="r"><code># Sumary of t test per assessment
+aux = TRUE
+for (scale in c(&quot;FMA&quot;,&quot;ARAT&quot;,&quot;WE&quot;,&quot;GripMore&quot;,&quot;SIS16&quot;)) {
+  
+  pre &lt;-
+    behav.data %&gt;%
+    filter(session == 1) %&gt;%
+    pull(scale)
+  post &lt;-
+    behav.data %&gt;%
+    filter(session == 10) %&gt;%
+    pull(scale)
+  
+  tt &lt;- t.test(post, pre, paired = TRUE)
+  
+  if(aux){
+    t &lt;- data.frame(Assessment = scale, t = tt$statistic, p = tt$p.value,
+                    Pre = paste(mean(pre, na.rm = T),&quot; (&quot;,formatC(sd(pre, na.rm = T),digits = 5),&quot;)&quot;,sep = &quot;&quot;),
+                    Post = paste(mean(post, na.rm = T),&quot; (&quot;,formatC(sd(post, na.rm = T),digits = 5),&quot;)&quot;,sep = &quot;&quot;))
+    aux = FALSE
+  }
+  else{
+    t &lt;- bind_rows(t,data.frame(Assessment = scale, t = tt$statistic, p = tt$p.value,
+                                Pre = paste(mean(pre, na.rm = T),&quot; (&quot;,formatC(sd(pre, na.rm = T),digits = 5),&quot;)&quot;,sep = &quot;&quot;),
+                                Post = paste(mean(post, na.rm = T),&quot; (&quot;,formatC(sd(post, na.rm = T),digits = 5),&quot;)&quot;,sep = &quot;&quot;)))
+  }
+}
+
+scaleName = c(&quot;FMA&quot;,&quot;ARAT&quot;,&quot;Extension&quot;,&quot;Grip More-Imp.&quot;,&quot;SIS-16&quot;)
+t$Assessment &lt;- scaleName
+
+# As table
+t %&gt;%
+  arrange(Assessment) %&gt;%
+  pander()</code></pre>
+<table style="width:99%;">
+<colgroup>
+<col width="23%" />
+<col width="11%" />
+<col width="13%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Assessment</th>
+<th align="center">t</th>
+<th align="center">p</th>
+<th align="center">Pre</th>
+<th align="center">Post</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">ARAT</td>
+<td align="center">2.611</td>
+<td align="center">0.0796</td>
+<td align="center">5.75 (8.8459)</td>
+<td align="center">7 (9.3808)</td>
+</tr>
+<tr class="even">
+<td align="center">Extension</td>
+<td align="center">2.27</td>
+<td align="center">0.1079</td>
+<td align="center">6.75 (7.8049)</td>
+<td align="center">10.5 (8.1854)</td>
+</tr>
+<tr class="odd">
+<td align="center">FMA</td>
+<td align="center">2.435</td>
+<td align="center">0.09295</td>
+<td align="center">18.75 (3.4034)</td>
+<td align="center">23.25 (4.1932)</td>
+</tr>
+<tr class="even">
+<td align="center">Grip More-Imp.</td>
+<td align="center">1.253</td>
+<td align="center">0.299</td>
+<td align="center">8.6675 (6.9861)</td>
+<td align="center">9.4425 (5.7796)</td>
+</tr>
+<tr class="odd">
+<td align="center">SIS-16</td>
+<td align="center">5.667</td>
+<td align="center">0.01088</td>
+<td align="center">58.5 (10.083)</td>
+<td align="center">62.75 (9.2871)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="figure-3" class="section level1">
+<h1>Figure 3</h1>
+<ul>
+<li>Individual statistics were calculated within the Matlab script that processed the tracking error from the target.</li>
+</ul>
+<pre class="r"><code># Individual stats
+track.data %&gt;%
+  filter(session == &quot;Post&quot;,metric == &quot;Error&quot;) %&gt;%
+  select(-c(session,metric,value)) %&gt;%
+  pander()</code></pre>
+<table style="width:49%;">
+<colgroup>
+<col width="19%" />
+<col width="16%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">participant</th>
+<th align="center">task</th>
+<th align="center">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">Extension</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">Extension</td>
+<td align="center">0.05</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">Extension</td>
+<td align="center">0.658</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">Extension</td>
+<td align="center">0.0072</td>
+</tr>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">Flexion</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">Flexion</td>
+<td align="center">0.1883</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">Flexion</td>
+<td align="center">0.0058</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">Flexion</td>
+<td align="center">0.0491</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># Group t-test
+aux = TRUE
+
+for (tk in c(&quot;Extension&quot;,&quot;Flexion&quot;)) {
+  pre &lt;- track.data %&gt;%
+    filter(session == &quot;Pre&quot;,metric == &quot;Error&quot;, task == tk) %&gt;%
+    pull(value)
+  post &lt;- track.data %&gt;%
+    filter(session == &quot;Post&quot;,metric == &quot;Error&quot;, task == tk) %&gt;%
+    pull(value)
+  
+  tt &lt;- t.test(post, pre, paired = TRUE)
+  
+  if(aux){
+    t &lt;- data.frame(task = paste(tk,&quot;Error&quot;,sep = &quot; &quot;), t = tt$statistic, p = tt$p.value,
+                    Pre = paste(mean(pre, na.rm = T),&quot; (&quot;,formatC(sd(pre, na.rm = T),digits = 5),&quot;)&quot;,sep = &quot;&quot;),
+                    Post = paste(mean(post, na.rm = T),&quot; (&quot;,formatC(sd(post, na.rm = T),digits = 5),&quot;)&quot;,sep = &quot;&quot;))
+    aux = FALSE
+  }
+  else{
+    t &lt;- bind_rows(t,data.frame(task = paste(tk,&quot;Error&quot;,sep = &quot; &quot;), t = tt$statistic, p = tt$p.value,
+                                Pre = paste(mean(pre, na.rm = T),&quot; (&quot;,formatC(sd(pre, na.rm = T),digits = 5),&quot;)&quot;,sep = &quot;&quot;),
+                                Post = paste(mean(post, na.rm = T),&quot; (&quot;,formatC(sd(post, na.rm = T),digits = 5),&quot;)&quot;,sep = &quot;&quot;)))
+  }
+}
+
+t %&gt;%
+  dplyr::rename(&quot;Task&quot; = task) %&gt;%
+  pander()</code></pre>
+<table>
+<colgroup>
+<col width="23%" />
+<col width="11%" />
+<col width="11%" />
+<col width="26%" />
+<col width="26%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Task</th>
+<th align="center">t</th>
+<th align="center">p</th>
+<th align="center">Pre</th>
+<th align="center">Post</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Extension Error</td>
+<td align="center">-1.584</td>
+<td align="center">0.2113</td>
+<td align="center">3.3707 (1.6319)</td>
+<td align="center">2.130475 (1.6587)</td>
+</tr>
+<tr class="even">
+<td align="center">Flexion Error</td>
+<td align="center">-1.559</td>
+<td align="center">0.2169</td>
+<td align="center">3.234675 (2.3997)</td>
+<td align="center">1.5575 (0.89222)</td>
+</tr>
+</tbody>
+</table>
+<p>Performance changes in EMG amplitude control.</p>
+<pre class="r"><code># Mean Amplitude Error
+track.error &lt;-
+  track.data %&gt;%
+  filter(metric == &quot;Error&quot;) %&gt;%
+  select(-c(metric,p)) %&gt;%
+  dplyr::rename(&quot;error&quot; = value, &quot;subject&quot; = participant)
+
+# Standard Deviation
+track.dev &lt;-
+  track.data %&gt;%
+  filter(metric == &quot;Deviation&quot;)
+
+track.error$lowSD &lt;- track.error$error-track.dev$value
+track.error$upSD &lt;- track.error$error+track.dev$value
+
+
+track.error %&gt;%
+  ggplot() +
+  geom_bar(aes(session,error, fill = as.factor(subject) ), stat = &quot;identity&quot;, position = &quot;dodge&quot;) +
+  geom_errorbar(aes(session,error,ymin = lowSD, ymax = upSD)) +
+  
+  facet_wrap(task ~ subject, scales = &quot;free_x&quot;, ncol = 4, strip.position = &quot;left&quot;) +
+  xlab(&quot;Evaluation&quot;) +
+  ylab(&quot;&quot;) +
+  theme_classic() +
+  scale_x_discrete(limits = c(&quot;Pre&quot;,&quot;Post&quot;)) +
+  scale_color_manual(values = seqColor[1:4]) +
+  scale_fill_manual(values = seqColor[1:4]) +
+  scale_shape_manual(values = 21:24) +
+  figTheme +
+  theme( strip.background.y = element_blank(),
+         legend.text = element_blank())+
+  labs(
+    title = &quot;Tracking Error&quot;,
+    fill = &quot;&quot;,
+    shape = &quot;&quot;,
+    color = &quot;&quot;
+  )</code></pre>
+<p><img src="SensosrFigures_may2020_files/figure-html/TrackingError-1.png" width="672" /></p>
+</div>
+<div id="table-3" class="section level1">
+<h1>Table 3</h1>
+<p>Group level analysis of within-game performance andd grip strenght across trqaining sessions.</p>
+<pre class="r"><code>aux = TRUE
+for (scale in c(&quot;extensors&quot;,&quot;flexors&quot;,&quot;individuation&quot;,&quot;threshold&quot;,&quot;success&quot;,&quot;grip&quot;)) {
+  
+  pre &lt;-
+    training.data %&gt;%
+    filter(session == 3) %&gt;%
+    pull(scale)
+  post &lt;-
+    training.data %&gt;%
+    filter(session == 9) %&gt;%
+    pull(scale)
+  
+  tt &lt;- t.test(post, pre, paired = TRUE)
+  
+  if(aux){
+    t &lt;- data.frame(Activity = scale, t = tt$statistic, p = tt$p.value,
+                    Pre = paste(formatC(mean(pre, na.rm = T),digits = 5),&quot; (&quot;,formatC(sd(pre, na.rm = T),digits = 5),&quot;)&quot;,sep = &quot;&quot;),
+                    Post = paste(formatC(mean(post, na.rm = T),digits = 5),&quot; (&quot;,formatC(sd(post, na.rm = T),digits = 5),&quot;)&quot;,sep = &quot;&quot;))
+    aux = FALSE
+  }
+  else{
+    t &lt;- bind_rows(t,data.frame(Activity = scale, t = tt$statistic, p = tt$p.value,
+                                Pre = paste(formatC(mean(pre, na.rm = T),digits = 5),&quot; (&quot;,formatC(sd(pre, na.rm = T),digits = 5),&quot;)&quot;,sep = &quot;&quot;),
+                                Post = paste(formatC(mean(post, na.rm = T),digits = 5),&quot; (&quot;,formatC(sd(post, na.rm = T),digits = 5),&quot;)&quot;,sep = &quot;&quot;)))
+  }
+}
+
+t %&gt;%
+  arrange(p) %&gt;%
+  pander()</code></pre>
+<table>
+<colgroup>
+<col width="19%" />
+<col width="13%" />
+<col width="11%" />
+<col width="32%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Activity</th>
+<th align="center">t</th>
+<th align="center">p</th>
+<th align="center">Pre</th>
+<th align="center">Post</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">individuation</td>
+<td align="center">2.576</td>
+<td align="center">0.08209</td>
+<td align="center">8.9425e-16 (1.6552e-15)</td>
+<td align="center">0.79704 (0.61891)</td>
+</tr>
+<tr class="even">
+<td align="center">extensors</td>
+<td align="center">1.809</td>
+<td align="center">0.1681</td>
+<td align="center">-1.9921e-16 (1.3166e-15)</td>
+<td align="center">1.4106 (1.5594)</td>
+</tr>
+<tr class="odd">
+<td align="center">grip</td>
+<td align="center">1.528</td>
+<td align="center">0.2239</td>
+<td align="center">7.6725 (6.3945)</td>
+<td align="center">10.133 ( 4)</td>
+</tr>
+<tr class="even">
+<td align="center">flexors</td>
+<td align="center">0.907</td>
+<td align="center">0.4313</td>
+<td align="center">-4.7064e-16 (7.3655e-16)</td>
+<td align="center">0.50199 (1.1069)</td>
+</tr>
+<tr class="odd">
+<td align="center">success</td>
+<td align="center">-0.3957</td>
+<td align="center">0.7188</td>
+<td align="center">57.292 ( 7.649)</td>
+<td align="center">55.833 (5.5694)</td>
+</tr>
+<tr class="even">
+<td align="center">threshold</td>
+<td align="center">-0.02606</td>
+<td align="center">0.9808</td>
+<td align="center">36.819 ( 19.35)</td>
+<td align="center">36.444 (21.444)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="figure-5" class="section level1">
+<h1>Figure 5</h1>
+<p>Muscle activity and performance during training</p>
+<ul>
+<li>Both plots show the extensor activity (as Z score) the extensor ratio (as Z score) and the success rate (as percentage). Two plots were created for easier visualization of both scales (-2 to 6, and 0 to 100) and then edited to a single figure.</li>
+</ul>
+<pre class="r"><code>training.data %&gt;%
+  select(c(&quot;subject&quot;,&quot;session&quot;,&quot;extensors&quot;,&quot;individuation&quot;,&quot;success&quot;)) %&gt;%
+  melt(id = c(&quot;subject&quot;,&quot;session&quot;)) %&gt;%
+  ggplot() +
+  geom_point(aes(session, value, shape = as.factor(subject), fill = as.factor(subject)), size = 2) +
+  geom_smooth(aes(session, value), method = &#39;lm&#39;, se = FALSE) + 
+  
+  facet_wrap(variable ~ subject, nrow = 5, ncol = 4) +
+  xlab(&quot;&quot;) +
+  ylab(&quot;&quot;) +
+  theme_classic() +
+  scale_y_continuous(limits = c(-2,6)) +
+  scale_color_manual(values = seqColor[c(1:4)]) +
+  scale_fill_manual(values = seqColor[c(1:4)]) +
+  scale_shape_manual(values = 21:24) +
+  figTheme +
+  theme(
+    strip.background.x = element_blank(),
+    strip.text.x = element_blank(),
+    legend.text = element_blank()
+  )+
+  labs(
+    title = &quot;Reinvent Activity&quot;,
+    fill = &quot;Participant&quot;,
+    shape = &quot;Participant&quot;
+  )</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning: Removed 28 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>## Warning: Removed 28 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning in strip_mat[panel_pos] &lt;- unlist(unname(strips), recursive = FALSE)[[params$strip.position]]: number of items to
+## replace is not a multiple of replacement length</code></pre>
+<p><img src="SensosrFigures_may2020_files/figure-html/Activity-1.png" width="672" /></p>
+<pre class="r"><code>training.data %&gt;%
+  select(c(&quot;subject&quot;,&quot;session&quot;,&quot;extensors&quot;,&quot;individuation&quot;,&quot;success&quot;)) %&gt;%
+  melt(id = c(&quot;subject&quot;,&quot;session&quot;)) %&gt;%
+  ggplot() +
+  geom_point(aes(session, value, shape = as.factor(subject), fill = as.factor(subject)), size = 2) +
+  geom_smooth(aes(session, value), method = &#39;lm&#39;, se = FALSE) + 
+  
+  facet_wrap(variable ~ subject, nrow = 5, ncol = 4) +
+  xlab(&quot;&quot;) +
+  ylab(&quot;&quot;) +
+  theme_classic() +
+  scale_y_continuous(limits = c(0,100)) +
+  scale_color_manual(values = seqColor[c(1:4)]) +
+  scale_fill_manual(values = seqColor[c(1:4)]) +
+  scale_shape_manual(values = 21:24) +
+  figTheme +
+  theme(
+    strip.background.x = element_blank(),
+    strip.text.x = element_blank(),
+    legend.text = element_blank()
+  )+
+  labs(
+    title = &quot;Reinvent Activity&quot;,
+    fill = &quot;Participant&quot;,
+    shape = &quot;Participant&quot;
+  )</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning: Removed 14 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>## Warning: Removed 14 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 8 rows containing missing values (geom_smooth).</code></pre>
+<pre><code>## Warning in strip_mat[panel_pos] &lt;- unlist(unname(strips), recursive = FALSE)[[params$strip.position]]: number of items to
+## replace is not a multiple of replacement length</code></pre>
+<p><img src="SensosrFigures_may2020_files/figure-html/Activity-2.png" width="672" /></p>
+<pre class="r"><code>training.nested &lt;-
+  training.data %&gt;%
+  as_tibble() %&gt;%
+  group_by(subject) %&gt;%
+  nest()
+
+print(&quot;Extensors session correlation&quot;)</code></pre>
+<pre><code>## [1] &quot;Extensors session correlation&quot;</code></pre>
+<pre class="r"><code>training.nested %&gt;%
+  mutate(
+    test = purrr::map(data, ~cor.test(.x$session, .x$extensors, method = &quot;spearman&quot;)),
+    tidied = purrr::map(test,tidy)
+  ) %&gt;%
+  unnest(tidied) %&gt;%
+  select(c(&quot;subject&quot;, &quot;estimate&quot;,&quot;p.value&quot;)) %&gt;%
+  dplyr::rename(&quot;Participant&quot;=subject, &quot;rho&quot;=estimate, &quot;p&quot;=p.value)%&gt;%
+  pander()</code></pre>
+<table style="width:47%;">
+<colgroup>
+<col width="19%" />
+<col width="13%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Participant</th>
+<th align="center">rho</th>
+<th align="center">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">0.6429</td>
+<td align="center">0.1389</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">-0.6429</td>
+<td align="center">0.1389</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">0.2857</td>
+<td align="center">0.556</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">0.8571</td>
+<td align="center">0.02381</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>print(&quot;Flexors session correlation&quot;)</code></pre>
+<pre><code>## [1] &quot;Flexors session correlation&quot;</code></pre>
+<pre class="r"><code>training.nested %&gt;%
+  mutate(
+    test = purrr::map(data, ~cor.test(.x$session, .x$flexors, method = &quot;spearman&quot;)),
+    tidied = purrr::map(test,tidy)
+  ) %&gt;%
+  unnest(tidied) %&gt;%
+  select(c(&quot;subject&quot;, &quot;estimate&quot;,&quot;p.value&quot;)) %&gt;%
+  dplyr::rename(&quot;Participant&quot;=subject, &quot;rho&quot;=estimate, &quot;p&quot;=p.value)%&gt;%
+  pander()</code></pre>
+<table style="width:47%;">
+<colgroup>
+<col width="19%" />
+<col width="13%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Participant</th>
+<th align="center">rho</th>
+<th align="center">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">0.5</td>
+<td align="center">0.2667</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">-0.75</td>
+<td align="center">0.06627</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">-0.1429</td>
+<td align="center">0.7825</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">0.4643</td>
+<td align="center">0.3024</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>print(&quot;ER session correlation&quot;)</code></pre>
+<pre><code>## [1] &quot;ER session correlation&quot;</code></pre>
+<pre class="r"><code>training.nested %&gt;%
+  mutate(
+    test = purrr::map(data, ~cor.test(.x$session, .x$individuation, method = &quot;spearman&quot;)),
+    tidied = purrr::map(test,tidy)
+  ) %&gt;%
+  unnest(tidied) %&gt;%
+  select(c(&quot;subject&quot;, &quot;estimate&quot;,&quot;p.value&quot;)) %&gt;%
+  dplyr::rename(&quot;Participant&quot;=subject, &quot;rho&quot;=estimate, &quot;p&quot;=p.value)%&gt;%
+  pander()</code></pre>
+<table style="width:47%;">
+<colgroup>
+<col width="19%" />
+<col width="13%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Participant</th>
+<th align="center">rho</th>
+<th align="center">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">0.1429</td>
+<td align="center">0.7825</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">-0.2857</td>
+<td align="center">0.556</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">0.8571</td>
+<td align="center">0.02381</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">0.3214</td>
+<td align="center">0.4976</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>print(&quot;Threshold session correlation&quot;)</code></pre>
+<pre><code>## [1] &quot;Threshold session correlation&quot;</code></pre>
+<pre class="r"><code>training.nested %&gt;%
+  mutate(
+    test = purrr::map(data, ~cor.test(.x$session, .x$threshold, method = &quot;spearman&quot;)),
+    tidied = purrr::map(test,tidy)
+  ) %&gt;%
+  unnest(tidied) %&gt;%
+  select(c(&quot;subject&quot;, &quot;estimate&quot;,&quot;p.value&quot;)) %&gt;%
+  dplyr::rename(&quot;Participant&quot;=subject, &quot;rho&quot;=estimate, &quot;p&quot;=p.value)%&gt;%
+  pander()</code></pre>
+<pre><code>## Warning in cor.test.default(.x$session, .x$threshold, method = &quot;spearman&quot;): Cannot compute exact p-value with ties</code></pre>
+<table style="width:50%;">
+<colgroup>
+<col width="19%" />
+<col width="15%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Participant</th>
+<th align="center">rho</th>
+<th align="center">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">-0.05406</td>
+<td align="center">0.9084</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">-0.1786</td>
+<td align="center">0.7131</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">-0.03571</td>
+<td align="center">0.9635</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">-0.5</td>
+<td align="center">0.2667</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>print(&quot;Performance session correlation&quot;)</code></pre>
+<pre><code>## [1] &quot;Performance session correlation&quot;</code></pre>
+<pre class="r"><code>training.nested %&gt;%
+  mutate(
+    test = purrr::map(data, ~cor.test(.x$session, .x$success, method = &quot;spearman&quot;)),
+    tidied = purrr::map(test,tidy)
+  ) %&gt;%
+  unnest(tidied) %&gt;%
+  select(c(&quot;subject&quot;, &quot;estimate&quot;,&quot;p.value&quot;)) %&gt;%
+  dplyr::rename(&quot;Participant&quot;=subject, &quot;rho&quot;=estimate, &quot;p&quot;=p.value)%&gt;%
+  pander()</code></pre>
+<pre><code>## Warning in cor.test.default(.x$session, .x$success, method = &quot;spearman&quot;): Cannot compute exact p-value with ties</code></pre>
+<pre><code>## Warning in cor.test.default(.x$session, .x$success, method = &quot;spearman&quot;): Cannot compute exact p-value with ties
+
+## Warning in cor.test.default(.x$session, .x$success, method = &quot;spearman&quot;): Cannot compute exact p-value with ties
+
+## Warning in cor.test.default(.x$session, .x$success, method = &quot;spearman&quot;): Cannot compute exact p-value with ties</code></pre>
+<table style="width:47%;">
+<colgroup>
+<col width="19%" />
+<col width="13%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Participant</th>
+<th align="center">rho</th>
+<th align="center">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">-0.1802</td>
+<td align="center">0.699</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">0.2</td>
+<td align="center">0.6672</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">0.3964</td>
+<td align="center">0.3786</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">-0.5189</td>
+<td align="center">0.2328</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>print(&quot;Grip session correlation&quot;)</code></pre>
+<pre><code>## [1] &quot;Grip session correlation&quot;</code></pre>
+<pre class="r"><code>training.nested %&gt;%
+  mutate(
+    test = purrr::map(data, ~cor.test(.x$session, .x$grip, method = &quot;spearman&quot;)),
+    tidied = purrr::map(test,tidy)
+  ) %&gt;%
+  unnest(tidied) %&gt;%
+  select(c(&quot;subject&quot;, &quot;estimate&quot;,&quot;p.value&quot;)) %&gt;%
+  dplyr::rename(&quot;Participant&quot;=subject, &quot;rho&quot;=estimate, &quot;p&quot;=p.value)%&gt;%
+  pander()</code></pre>
+<pre><code>## Warning in cor.test.default(.x$session, .x$grip, method = &quot;spearman&quot;): Cannot compute exact p-value with ties</code></pre>
+<pre><code>## Warning in cor.test.default(.x$session, .x$grip, method = &quot;spearman&quot;): Cannot compute exact p-value with ties
+
+## Warning in cor.test.default(.x$session, .x$grip, method = &quot;spearman&quot;): Cannot compute exact p-value with ties</code></pre>
+<table style="width:50%;">
+<colgroup>
+<col width="19%" />
+<col width="13%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Participant</th>
+<th align="center">rho</th>
+<th align="center">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">0.955</td>
+<td align="center">0.0008055</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">-0.5225</td>
+<td align="center">0.2289</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">0.5357</td>
+<td align="center">0.2357</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">0.2342</td>
+<td align="center">0.6132</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

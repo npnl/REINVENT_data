@@ -1,0 +1,437 @@
+---
+title: "REINVENT Data"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    number_sections: false
+    code_folding: hide
+    fig_width: 7
+    fig_height: 4
+    fig_caption: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r RestartEnvironment, echo = FALSE}
+rm(list=ls())
+graphics.off()
+cat("\014")
+```
+
+```{r Libraries, echo = FALSE, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(reshape2)
+library(pander)
+```
+
+```{r InitialSetup}
+
+# Colors
+seqColor <- c("#a6611a","#dfc27d","#80cdc1","#018571")
+
+# Figure Theme
+figTheme <- theme(
+  legend.text = element_text(size = 12),
+  legend.title = element_text(size = 12),
+  plot.title = element_text(size = 12),
+  strip.text.x = element_text(size = 12),
+  axis.title.x = element_text(size = 12),
+  axis.title.y = element_text(size = 12),
+  axis.text.x = element_text(size = 12),
+  axis.text.y = element_text(size = 12))
+
+# Load data frame
+load("sensors2020data.Rda")
+
+```
+
+***
+
+# Table 1
+
+Participant demographics and baseline evaluations
+```{r Demographics}
+
+# Show table
+demograph.data%>%
+  dplyr::rename(
+    "Participant" = Subject,
+    "Sex" = Gender,
+    "Onset (months)" = Months.since.stroke,
+    "FMA-UE" = FMA,
+    "Paresis" = Affected.side) %>%
+  pander()
+
+```
+
+
+# Feasibility
+
+The simulator sickness questionnaire evaluates different components and has a total score of 63 points. 
+Group changes on simulator sickness were evaluated with the total sickness as a percentage (sickness = total*100/63).
+```{r SimulatorSickness}
+
+# Get pre and post 
+pre <- simsick.data %>%
+  filter(session == 2)
+post <- simsick.data %>%
+  filter(session == 9)
+
+t.test(post$Sickness, pre$Sickness, paired = TRUE)
+
+```
+
+
+# Figure 2
+
+Clinical Assessments
+```{r ClinicalAssessments}
+
+# Change session to Pre-Post and melt dataframe
+behav.melt <- 
+  behav.data %>%
+  filter(session %in% c(1,10)) %>%
+  mutate(session = ifelse(session == 1, "Pre","Post")) %>%
+  dplyr::rename(
+    "Extension" = WE,
+    "SIS-16" = SIS16) %>%
+  melt(id = c("subject","session"))
+
+# Plot FMA and ARAT
+behav.melt %>%
+  ggplot() +
+  geom_line(aes(session, value, group = as.factor(subject), color = as.factor(subject)), size = 2, alpha = 0.7, show.legend = F) +
+  geom_point(aes(session, value, shape = as.factor(subject), fill = as.factor(subject)), size = 3) +
+  
+  facet_wrap(~ variable, scales = "free", ncol = 3) +
+  xlab("Evaluation") +
+  ylab("") +
+  theme_classic() +
+  scale_x_discrete(limits = c("Pre","Post")) +
+  scale_color_manual(values = seqColor[1:5]) +
+  scale_fill_manual(values = seqColor[1:5]) +
+  scale_shape_manual(values = 21:24) +
+  figTheme +
+  theme( strip.background.x = element_blank())+
+  labs(
+    title = "Clinical Assessments",
+    fill = "Participant",
+    shape = "Participant",
+    color = ""
+  )
+```
+
+
+# Table 2
+
+Statistical comparisons for clinical assessments
+```{r ClinicalAssessmentsGroup}
+# Sumary of t test per assessment
+aux = TRUE
+for (scale in c("FMA","ARAT","WE","GripMore","SIS16")) {
+  
+  pre <-
+    behav.data %>%
+    filter(session == 1) %>%
+    pull(scale)
+  post <-
+    behav.data %>%
+    filter(session == 10) %>%
+    pull(scale)
+  
+  tt <- t.test(post, pre, paired = TRUE)
+  
+  if(aux){
+    t <- data.frame(Assessment = scale, t = tt$statistic, p = tt$p.value,
+                    Pre = paste(mean(pre, na.rm = T)," (",formatC(sd(pre, na.rm = T),digits = 5),")",sep = ""),
+                    Post = paste(mean(post, na.rm = T)," (",formatC(sd(post, na.rm = T),digits = 5),")",sep = ""))
+    aux = FALSE
+  }
+  else{
+    t <- bind_rows(t,data.frame(Assessment = scale, t = tt$statistic, p = tt$p.value,
+                                Pre = paste(mean(pre, na.rm = T)," (",formatC(sd(pre, na.rm = T),digits = 5),")",sep = ""),
+                                Post = paste(mean(post, na.rm = T)," (",formatC(sd(post, na.rm = T),digits = 5),")",sep = "")))
+  }
+}
+
+scaleName = c("FMA","ARAT","Extension","Grip More-Imp.","SIS-16")
+t$Assessment <- scaleName
+
+# As table
+t %>%
+  arrange(Assessment) %>%
+  pander()
+
+```
+
+
+# Figure 3
+
+* Individual statistics were calculated within the Matlab script that processed the tracking error from the target.
+```{r TrackingErrorStats}
+
+# Individual stats
+track.data %>%
+  filter(session == "Post",metric == "Error") %>%
+  select(-c(session,metric,value)) %>%
+  pander()
+
+# Group t-test
+aux = TRUE
+
+for (tk in c("Extension","Flexion")) {
+  pre <- track.data %>%
+    filter(session == "Pre",metric == "Error", task == tk) %>%
+    pull(value)
+  post <- track.data %>%
+    filter(session == "Post",metric == "Error", task == tk) %>%
+    pull(value)
+  
+  tt <- t.test(post, pre, paired = TRUE)
+  
+  if(aux){
+    t <- data.frame(task = paste(tk,"Error",sep = " "), t = tt$statistic, p = tt$p.value,
+                    Pre = paste(mean(pre, na.rm = T)," (",formatC(sd(pre, na.rm = T),digits = 5),")",sep = ""),
+                    Post = paste(mean(post, na.rm = T)," (",formatC(sd(post, na.rm = T),digits = 5),")",sep = ""))
+    aux = FALSE
+  }
+  else{
+    t <- bind_rows(t,data.frame(task = paste(tk,"Error",sep = " "), t = tt$statistic, p = tt$p.value,
+                                Pre = paste(mean(pre, na.rm = T)," (",formatC(sd(pre, na.rm = T),digits = 5),")",sep = ""),
+                                Post = paste(mean(post, na.rm = T)," (",formatC(sd(post, na.rm = T),digits = 5),")",sep = "")))
+  }
+}
+
+t %>%
+  dplyr::rename("Task" = task) %>%
+  pander()
+```
+
+Performance changes in EMG amplitude control.
+```{r TrackingError}
+# Mean Amplitude Error
+track.error <-
+  track.data %>%
+  filter(metric == "Error") %>%
+  select(-c(metric,p)) %>%
+  dplyr::rename("error" = value, "subject" = participant)
+
+# Standard Deviation
+track.dev <-
+  track.data %>%
+  filter(metric == "Deviation")
+
+track.error$lowSD <- track.error$error-track.dev$value
+track.error$upSD <- track.error$error+track.dev$value
+
+
+track.error %>%
+  ggplot() +
+  geom_bar(aes(session,error, fill = as.factor(subject) ), stat = "identity", position = "dodge") +
+  geom_errorbar(aes(session,error,ymin = lowSD, ymax = upSD)) +
+  
+  facet_wrap(task ~ subject, scales = "free_x", ncol = 4, strip.position = "left") +
+  xlab("Evaluation") +
+  ylab("") +
+  theme_classic() +
+  scale_x_discrete(limits = c("Pre","Post")) +
+  scale_color_manual(values = seqColor[1:4]) +
+  scale_fill_manual(values = seqColor[1:4]) +
+  scale_shape_manual(values = 21:24) +
+  figTheme +
+  theme( strip.background.y = element_blank(),
+         legend.text = element_blank())+
+  labs(
+    title = "Tracking Error",
+    fill = "",
+    shape = "",
+    color = ""
+  )
+```
+
+
+
+# Table 3
+
+Group level analysis of within-game performance andd grip strenght across trqaining sessions.
+```{r ActivityGroup}
+
+aux = TRUE
+for (scale in c("extensors","flexors","individuation","threshold","success","grip")) {
+  
+  pre <-
+    training.data %>%
+    filter(session == 3) %>%
+    pull(scale)
+  post <-
+    training.data %>%
+    filter(session == 9) %>%
+    pull(scale)
+  
+  tt <- t.test(post, pre, paired = TRUE)
+  
+  if(aux){
+    t <- data.frame(Activity = scale, t = tt$statistic, p = tt$p.value,
+                    Pre = paste(formatC(mean(pre, na.rm = T),digits = 5)," (",formatC(sd(pre, na.rm = T),digits = 5),")",sep = ""),
+                    Post = paste(formatC(mean(post, na.rm = T),digits = 5)," (",formatC(sd(post, na.rm = T),digits = 5),")",sep = ""))
+    aux = FALSE
+  }
+  else{
+    t <- bind_rows(t,data.frame(Activity = scale, t = tt$statistic, p = tt$p.value,
+                                Pre = paste(formatC(mean(pre, na.rm = T),digits = 5)," (",formatC(sd(pre, na.rm = T),digits = 5),")",sep = ""),
+                                Post = paste(formatC(mean(post, na.rm = T),digits = 5)," (",formatC(sd(post, na.rm = T),digits = 5),")",sep = "")))
+  }
+}
+
+t %>%
+  arrange(p) %>%
+  pander()
+
+```
+
+
+
+# Figure 5
+Muscle activity and performance during training
+
+* Both plots show the extensor activity (as Z score) the extensor ratio (as Z score) and the success rate (as percentage). Two plots were created for easier visualization of both scales (-2 to 6, and 0 to 100) and then edited to a single figure. 
+```{r Activity}
+
+training.data %>%
+  select(c("subject","session","extensors","individuation","success")) %>%
+  melt(id = c("subject","session")) %>%
+  ggplot() +
+  geom_point(aes(session, value, shape = as.factor(subject), fill = as.factor(subject)), size = 2) +
+  geom_smooth(aes(session, value), method = 'lm', se = FALSE) + 
+  
+  facet_wrap(variable ~ subject, nrow = 5, ncol = 4) +
+  xlab("") +
+  ylab("") +
+  theme_classic() +
+  scale_y_continuous(limits = c(-2,6)) +
+  scale_color_manual(values = seqColor[c(1:4)]) +
+  scale_fill_manual(values = seqColor[c(1:4)]) +
+  scale_shape_manual(values = 21:24) +
+  figTheme +
+  theme(
+    strip.background.x = element_blank(),
+    strip.text.x = element_blank(),
+    legend.text = element_blank()
+  )+
+  labs(
+    title = "Reinvent Activity",
+    fill = "Participant",
+    shape = "Participant"
+  )
+
+training.data %>%
+  select(c("subject","session","extensors","individuation","success")) %>%
+  melt(id = c("subject","session")) %>%
+  ggplot() +
+  geom_point(aes(session, value, shape = as.factor(subject), fill = as.factor(subject)), size = 2) +
+  geom_smooth(aes(session, value), method = 'lm', se = FALSE) + 
+  
+  facet_wrap(variable ~ subject, nrow = 5, ncol = 4) +
+  xlab("") +
+  ylab("") +
+  theme_classic() +
+  scale_y_continuous(limits = c(0,100)) +
+  scale_color_manual(values = seqColor[c(1:4)]) +
+  scale_fill_manual(values = seqColor[c(1:4)]) +
+  scale_shape_manual(values = 21:24) +
+  figTheme +
+  theme(
+    strip.background.x = element_blank(),
+    strip.text.x = element_blank(),
+    legend.text = element_blank()
+  )+
+  labs(
+    title = "Reinvent Activity",
+    fill = "Participant",
+    shape = "Participant"
+  )
+```
+
+
+
+
+```{r ActivityCorrelation}
+
+training.nested <-
+  training.data %>%
+  as_tibble() %>%
+  group_by(subject) %>%
+  nest()
+
+print("Extensors session correlation")
+training.nested %>%
+  mutate(
+    test = purrr::map(data, ~cor.test(.x$session, .x$extensors, method = "spearman")),
+    tidied = purrr::map(test,tidy)
+  ) %>%
+  unnest(tidied) %>%
+  select(c("subject", "estimate","p.value")) %>%
+  dplyr::rename("Participant"=subject, "rho"=estimate, "p"=p.value)%>%
+  pander()
+
+print("Flexors session correlation")
+training.nested %>%
+  mutate(
+    test = purrr::map(data, ~cor.test(.x$session, .x$flexors, method = "spearman")),
+    tidied = purrr::map(test,tidy)
+  ) %>%
+  unnest(tidied) %>%
+  select(c("subject", "estimate","p.value")) %>%
+  dplyr::rename("Participant"=subject, "rho"=estimate, "p"=p.value)%>%
+  pander()
+
+print("ER session correlation")
+training.nested %>%
+  mutate(
+    test = purrr::map(data, ~cor.test(.x$session, .x$individuation, method = "spearman")),
+    tidied = purrr::map(test,tidy)
+  ) %>%
+  unnest(tidied) %>%
+  select(c("subject", "estimate","p.value")) %>%
+  dplyr::rename("Participant"=subject, "rho"=estimate, "p"=p.value)%>%
+  pander()
+
+print("Threshold session correlation")
+training.nested %>%
+  mutate(
+    test = purrr::map(data, ~cor.test(.x$session, .x$threshold, method = "spearman")),
+    tidied = purrr::map(test,tidy)
+  ) %>%
+  unnest(tidied) %>%
+  select(c("subject", "estimate","p.value")) %>%
+  dplyr::rename("Participant"=subject, "rho"=estimate, "p"=p.value)%>%
+  pander()
+
+print("Performance session correlation")
+training.nested %>%
+  mutate(
+    test = purrr::map(data, ~cor.test(.x$session, .x$success, method = "spearman")),
+    tidied = purrr::map(test,tidy)
+  ) %>%
+  unnest(tidied) %>%
+  select(c("subject", "estimate","p.value")) %>%
+  dplyr::rename("Participant"=subject, "rho"=estimate, "p"=p.value)%>%
+  pander()
+
+print("Grip session correlation")
+training.nested %>%
+  mutate(
+    test = purrr::map(data, ~cor.test(.x$session, .x$grip, method = "spearman")),
+    tidied = purrr::map(test,tidy)
+  ) %>%
+  unnest(tidied) %>%
+  select(c("subject", "estimate","p.value")) %>%
+  dplyr::rename("Participant"=subject, "rho"=estimate, "p"=p.value)%>%
+  pander()
+```

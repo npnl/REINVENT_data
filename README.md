@@ -5,14 +5,17 @@ Chronic Stroke: A Pilot Study](link)
 
 # Notes
 
-As mentioned in Vourvopoulos et al, data was acquired using the Labstreaming Layer protocol, and thus recorded as independent streams of data timestamped and saved as .xdf files.
-The _data_ folder contains the acquired data after extracting the xdf files and respectively downsampling and interpolating signals to a common sample rate of 1000 Hz. Data was stored in individual .mat files for each participant, during each session and per block of trials.
+Similar to our previous work (Vourvopoulos et al.) data was acquired using the [Labstreaming Layer](https://github.com/sccn/labstreaminglayer) protocol, and thus recorded as independent streams of data timestamped and saved as .xdf files.
 
-The _figures_ folder contains the processed data and the R code that created the figures in Marin-Pardo et al.
+The _data_ folder contains .mat files that correspond to the extracted .xdf files and respectively downsampling and interpolating signals to a common sample rate of 1000 Hz. Data was stored in individual files for each participant, during each session and per block of trials.
 
-# Referencing
+The _figures_ folder contains the processed data and the Matlab and R code that created the figures and statistical comparisons shown in Marin-Pardo et al.
 
-[Thanos paper](link)
+# References
+
+Vourvopoulos, A., Pardo, O. M., Lefebvre, S., Neureither, M., Saldana, D., Jahng, E., & Liew, S. L. (2019). Effects of a brain-computer interface with virtual reality (VR) neurofeedback: a pilot study in chronic stroke patients. Frontiers in human neuroscience, 13, 210.
+[https://doi.org/10.3389/fnhum.2019.00210](https://doi.org/10.3389/fnhum.2019.00210)
+
 [Octavio paper](link)
 
 # License
