@@ -9,7 +9,7 @@ Similar to our previous work (Vourvopoulos et al.) data was acquired using the [
 
 The _data_ folder contains .mat files that correspond to the extracted .xdf files and respectively downsampling and interpolating signals to a common sample rate of 1000 Hz. Data was stored in individual files for each participant, during each session and per block of trials.
 
-The _figures_ folder contains the processed data and the Matlab and R code that created the figures and statistical comparisons shown in Marin-Pardo et al.
+The file _sensors2020data_ contains the processed data used to create the [figures and statistical comparisons](/docs/index.html) shown in Marin-Pardo et al.
 
 # References
 
