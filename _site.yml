@@ -2,9 +2,5 @@ name: "Reinvent Data - 2020"
 navbar:
   title: "Reinvent Data - 2020"
   left:
-    - text: "Home"
-      href: index.html
-    - text: "speed"
-      href: speed-and-distance.html
     - text: "Figures"
-      href: SensorsFigures_may2020.html
+      href: index.html
