@@ -91,6 +91,13 @@ post <- simsick.data %>%
 
 t.test(post$Sickness, pre$Sickness, paired = TRUE)
 
+pre$Sickness
+mean(pre$Sickness)
+sd(pre$Sickness, na.rm = T)
+
+post$Sickness
+mean(post$Sickness)
+sd(post$Sickness, na.rm = T)
 ```
 
 
