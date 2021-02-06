@@ -1,16 +1,21 @@
 # REINVENT data
 
-This repository contains the data used in our paper [A Virtual Reality Muscle-Computer-Interface for Neurorehabilitation in Chronic Stroke: A Pilot Study](link)
+This repository contains the data used in our papers:
+* [A Virtual Reality Muscle–Computer Interface for Neurorehabilitation in Chronic Stroke: A Pilot Study](https://doi.org/10.3390/s20133754)
+  * Available in [data](https://github.com/npnl/REINVENT_data/tree/master/data)
+* [Coming Soon...](link)
+  * Available in [Tele-REINVENT_data](https://github.com/npnl/REINVENT_data/tree/master/Tele-REINVENT_data)
 
 # Notes
 
 ## Acquisition
 
-Similar to our previous work (Vourvopoulos et al.) data was acquired using the [Labstreaming Layer](https://github.com/sccn/labstreaminglayer) protocol, and thus recorded as independent streams of data timestamped and saved as .xdf files.
+Similar to our previous work (Vourvopoulos, A., et al., 2019) data was acquired using the [Labstreaming Layer](https://github.com/sccn/labstreaminglayer) protocol, and thus recorded as independent streams of data timestamped and saved as .xdf files.
 
-## Data
 
-The folder _**data**_ contains .mat files that correspond to the extracted .xdf files after normalizing (downsampling or interpolating) all signals to a common sample rate of 1000 Hz.
+## REINVENT
+
+The folder _**REINVENT_data**_ contains .mat files that correspond to the extracted .xdf files after normalizing (downsampling or interpolating) all signals to a common sample rate of 1000 Hz.
 Data was stored in individual files for each participant (_sXX_), during each session (_tXX_) and per block of trials.
 E.g.: file _s03t04_block_5_ corresponds to Participant 3's fifth block of the fourth training session.
 
@@ -56,15 +61,38 @@ Files _sXXtXX_block_X.mat_ contain a single _data_ structure with the following 
 * **gripEMG**: 4 channels of EMG recorded during the power grip.
   * Note that _gripEMG_ was **not** downsampled. This field has a sample rate of 2000 Hz
 
+
+
+## Tele-REINVENT
+
+The folder _**REINVENT_data**_ contains .mat files that correspond to the extracted .xdf files after normalizing (downsampling or interpolating) all signals to a common sample rate of 1000 Hz.
+Data was stored in individual files for each session.
+
+For all recordings, **EMG** electrodes were placed over:
+  * Wrist extensor muscle
+  * Wrist flexor muscle
+
+Files _session_X.mat_ contain a single _data_ structure with the following fields:
+  * **session** number
+  * **sampleRate** of 1000 Hz for all signals
+  * **mvc** with the time and EMG signals during the recorded calibration
+  * **time** of each data point in seconds
+  * 2 channels of **EMG** data recorded from the extensor and flexor muscles
+  * Current **trial** number
+
+
 ## Figures
 
-The file _sensors2020data_ contains the processed data used to create the [figures and statistical comparisons](https://npnl.github.io/REINVENT_data) shown in Marin-Pardo et al.
+The file _sensors2020data_ contains the processed data used to create the [figures and statistical comparisons](https://npnl.github.io/REINVENT_data) shown in Marin-Pardo et al., 2020.
+
+The file _sensors2021data_ contains the processed data used to create the [figures and statistical comparisons](https://npnl.github.io/Tele-REINVENT_data) shown in Marin-Pardo et al., 2020.
 
 # References
 
 Vourvopoulos, A., Pardo, O. M., Lefebvre, S., Neureither, M., Saldana, D., Jahng, E., & Liew, S. L. (2019). Effects of a brain-computer interface with virtual reality (VR) neurofeedback: a pilot study in chronic stroke patients. Frontiers in human neuroscience, 13, 210.
 [https://doi.org/10.3389/fnhum.2019.00210](https://doi.org/10.3389/fnhum.2019.00210)
 
-[EMG paper](link)
+Marin-Pardo, O., Laine, C. M., Rennie, M., Ito, K. L., Finley, J., & Liew, S. L. (2020). A Virtual Reality Muscle–Computer Interface for Neurorehabilitation in Chronic Stroke: A Pilot Study. Sensors, 20(13), 3754.
+[https://doi.org/10.3390/s20133754](https://doi.org/10.3390/s20133754)
 
 # License
