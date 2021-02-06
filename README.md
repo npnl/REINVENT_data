@@ -15,7 +15,7 @@ Similar to our previous work (Vourvopoulos, A., et al., 2019) data was acquired 
 
 ## REINVENT
 
-The folder _**REINVENT_data**_ contains .mat files that correspond to the extracted .xdf files after normalizing (downsampling or interpolating) all signals to a common sample rate of 1000 Hz.
+The folder _**data**_ contains .mat files that correspond to the extracted .xdf files after normalizing (downsampling or interpolating) all signals to a common sample rate of 1000 Hz.
 Data was stored in individual files for each participant (_sXX_), during each session (_tXX_) and per block of trials.
 E.g.: file _s03t04_block_5_ corresponds to Participant 3's fifth block of the fourth training session.
 
@@ -65,7 +65,7 @@ Files _sXXtXX_block_X.mat_ contain a single _data_ structure with the following 
 
 ## Tele-REINVENT
 
-The folder _**REINVENT_data**_ contains .mat files that correspond to the extracted .xdf files after normalizing (downsampling or interpolating) all signals to a common sample rate of 1000 Hz.
+The folder _**Tele-REINVENT_data**_ contains .mat files that correspond to the extracted .xdf files after normalizing (downsampling or interpolating) all signals to a common sample rate of 1000 Hz.
 Data was stored in individual files for each session.
 
 For all recordings, **EMG** electrodes were placed over:
@@ -85,7 +85,7 @@ Files _session_X.mat_ contain a single _data_ structure with the following field
 
 The file _sensors2020data_ contains the processed data used to create the [figures and statistical comparisons](https://npnl.github.io/REINVENT_data) shown in Marin-Pardo et al., 2020.
 
-The file _sensors2021data_ contains the processed data used to create the [figures and statistical comparisons](https://npnl.github.io/Tele-REINVENT_data) shown in Marin-Pardo et al., 2020.
+The file _sensors2021data_ contains the processed data used to create the [figures and statistical comparisons](https://npnl.github.io/Tele-REINVENT_data) shown in Marin-Pardo et al., 2021.
 
 # References
 
